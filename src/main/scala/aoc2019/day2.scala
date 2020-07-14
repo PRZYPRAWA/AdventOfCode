@@ -33,4 +33,9 @@ object Day2 {
 object Day2Main extends App {
   val ints = Day2.readFile.map(_.toInt)
   println(Day2.run(ints.updated(1, 12).updated(2, 2)))
+
+  for (x <- 0 until 100; y <- 0 until 100) {
+    val res = Day2.run(ints.updated(1, x).updated(2, y))
+    if (res.head == 19690720) println((100 * x + y))
+  }
 }
