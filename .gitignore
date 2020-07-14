@@ -19,6 +19,7 @@ project/plugins/project/
 # IntelliJ specific
 .idea
 
+.bloop/
 .metals/
 .ammonite/
 metals.sbt
