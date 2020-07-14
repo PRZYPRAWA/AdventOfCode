@@ -14,14 +14,28 @@ object Day1 {
     lines
   }
 
-  def run(): Int =
-    Foldable[List].foldMap(readFile)(e => mapInput(e.toInt))
+  def run(list: List[String])(mapFunc: String => Int): Int =
+    Foldable[List].foldMap(list)(mapFunc)
 
-  def mapInput(n: Int): Int =
+  def mapInput1(n: Int): Int =
     n / 3 - 2
+
+  def mapInput2(n: Int): List[Int] =
+    n match {
+      case _ if n <= 0 => Nil
+      case _ => {
+        val mapped = mapInput1(n)
+        val mapped2 = if (mapped <= 0) 0 else mapped
+        mapped2 :: mapInput2(mapped2)
+      }
+    }
 
 }
 
 object Day1Main extends App {
-  println(Day1.run)
+  import Day1._
+
+  val lines = Day1.readFile
+  println(Day1.run(lines)(e => mapInput1(e.toInt)))
+  println(Day1.run(lines)(e => mapInput2(e.toInt).foldLeft(0)(_ |+| _)))
 }
