@@ -3,7 +3,7 @@ package aoc2018
 import scala.annotation.tailrec
 import scala.io.Source
 
-object Part1and2 extends App {
+object Day1 extends App {
   val input =
     Source.fromFile("src/main/scala/aoc2018/input-day1.txt").getLines.toList
 
