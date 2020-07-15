@@ -2,7 +2,7 @@ package aoc2015
 
 import scala.util.matching.Regex
 import scala.io.Source
-import scala.collection.mutable.ArrayBuffer // used because of the efficiency problem 
+import scala.collection.mutable.ArrayBuffer // used because of the efficiency problem
 
 object Day6 {
   def readFile: List[String] = {
@@ -14,7 +14,7 @@ object Day6 {
     lines
   }
 
-  def run(list: List[String]): ArrayBuffer[ArrayBuffer[Int]] = {
+  def run1(list: List[String]): ArrayBuffer[ArrayBuffer[Int]] = {
     val instruction =
       raw"(toggle|turn on|turn off) (\d+,\d+) through (\d+,\d+)".r
 
@@ -44,6 +44,45 @@ object Day6 {
           loop(instructions.tail, turnOn(grid, second, third))
         } else {
           loop(instructions.tail, turnOff(grid, second, third))
+        }
+      }
+
+    loop(list, ArrayBuffer.fill(1000)(ArrayBuffer.fill(1000)(0)))
+  }
+
+  def run2(list: List[String]): ArrayBuffer[ArrayBuffer[Int]] = {
+    val instruction =
+      raw"(toggle|turn on|turn off) (\d+,\d+) through (\d+,\d+)".r
+
+    def loop(
+        instructions: List[String],
+        grid: ArrayBuffer[ArrayBuffer[Int]]
+    ): ArrayBuffer[ArrayBuffer[Int]] =
+      if (instructions == Nil) {
+        grid
+      } else {
+        val first = instruction.findAllIn(instructions.head).group(1)
+
+        val second = takePoints(
+          instruction.findAllIn(instructions.head).group(2)
+        )
+
+        val third = takePoints(
+          instruction.findAllIn(instructions.head).group(3)
+        )
+
+        if (first == "toggle") {
+          loop(
+            instructions.tail,
+            toggle(grid, second, third, e => e + 2)
+          )
+        } else if (first == "turn on") {
+          loop(instructions.tail, toggle(grid, second, third, e => e + 1))
+        } else {
+          loop(
+            instructions.tail,
+            toggle(grid, second, third, e => if (e == 0) 0 else e - 1)
+          )
         }
       }
 
@@ -90,5 +129,7 @@ object Day6Main extends App {
   val lines = Day6.readFile
 
   println(lines.head)
-  println(Day6.run(lines).flatten.foldLeft(0)(_ + _))
+  println(Day6.run1(lines).flatten.foldLeft(0)(_ + _))
+  println(Day6.run2(lines).flatten.foldLeft(0)(_ + _))
+  println()
 }
