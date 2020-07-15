@@ -3,6 +3,7 @@ package aoc2019
 import scala.io.Source
 
 object Day2 {
+
   def readFile: List[String] = {
     val filename = "src/main/scala/aoc2019/input-day2.txt"
     val source = Source.fromFile(filename)

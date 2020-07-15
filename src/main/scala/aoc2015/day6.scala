@@ -5,6 +5,7 @@ import scala.io.Source
 import scala.collection.mutable.ArrayBuffer // used because of the efficiency problem
 
 object Day6 {
+
   def readFile: List[String] = {
     val filename = "src/main/scala/aoc2015/input-day6.txt"
     val source = Source.fromFile(filename)
@@ -19,8 +20,8 @@ object Day6 {
       raw"(toggle|turn on|turn off) (\d+,\d+) through (\d+,\d+)".r
 
     def loop(
-        instructions: List[String],
-        grid: ArrayBuffer[ArrayBuffer[Int]]
+      instructions: List[String],
+      grid: ArrayBuffer[ArrayBuffer[Int]]
     ): ArrayBuffer[ArrayBuffer[Int]] =
       if (instructions == Nil) {
         grid
@@ -55,8 +56,8 @@ object Day6 {
       raw"(toggle|turn on|turn off) (\d+,\d+) through (\d+,\d+)".r
 
     def loop(
-        instructions: List[String],
-        grid: ArrayBuffer[ArrayBuffer[Int]]
+      instructions: List[String],
+      grid: ArrayBuffer[ArrayBuffer[Int]]
     ): ArrayBuffer[ArrayBuffer[Int]] =
       if (instructions == Nil) {
         grid
@@ -95,10 +96,10 @@ object Day6 {
   }
 
   def toggle(
-      grid: ArrayBuffer[ArrayBuffer[Int]],
-      first: (Int, Int),
-      second: (Int, Int),
-      func: Int => Int
+    grid: ArrayBuffer[ArrayBuffer[Int]],
+    first: (Int, Int),
+    second: (Int, Int),
+    func: Int => Int
   ): ArrayBuffer[ArrayBuffer[Int]] = {
     val points = (for {
       x <- first._1 to second._1
@@ -112,15 +113,15 @@ object Day6 {
   }
 
   def turnOn(
-      grid: ArrayBuffer[ArrayBuffer[Int]],
-      first: (Int, Int),
-      second: (Int, Int)
+    grid: ArrayBuffer[ArrayBuffer[Int]],
+    first: (Int, Int),
+    second: (Int, Int)
   ): ArrayBuffer[ArrayBuffer[Int]] = toggle(grid, first, second, e => 1)
 
   def turnOff(
-      grid: ArrayBuffer[ArrayBuffer[Int]],
-      first: (Int, Int),
-      second: (Int, Int)
+    grid: ArrayBuffer[ArrayBuffer[Int]],
+    first: (Int, Int),
+    second: (Int, Int)
   ): ArrayBuffer[ArrayBuffer[Int]] = toggle(grid, first, second, e => 0)
 
 }

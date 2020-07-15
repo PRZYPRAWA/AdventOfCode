@@ -5,6 +5,7 @@ import cats._
 import cats.implicits._
 
 object Day1 {
+
   def readFile: List[String] = {
     val filename = "src/main/scala/aoc2019/input-day1.txt"
     val source = Source.fromFile(filename)

@@ -29,5 +29,5 @@ object Day2 extends App {
   }
 
   println("Something")
-  println(checksum(input,0,0))
+  println(checksum(input, 0, 0))
 }

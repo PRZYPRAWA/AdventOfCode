@@ -6,6 +6,7 @@ import scala.io.Source
 case class Point(x: Int, y: Int)
 
 object Day3 {
+
   def readFile: List[String] = {
     val filename = "src/main/scala/aoc2018/input-day3.txt"
     val source = Source.fromFile(filename)
@@ -14,7 +15,6 @@ object Day3 {
 
     lines
   }
-
 
   def countMap(input: List[String]) = {
     input
@@ -30,7 +30,6 @@ object Day3 {
       }
       .count(point => point._2 > 1)
   }
-
 
   def mapToPoints(startingPoint: (Int, Int), size: (Int, Int)): List[Point] = {
     var list: List[Point] = List()
@@ -53,4 +52,3 @@ object Day3Main extends App {
   val map = Day3.countMap(lines)
   println(map)
 }
-

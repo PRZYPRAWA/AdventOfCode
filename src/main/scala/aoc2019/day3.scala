@@ -32,9 +32,9 @@ object Day3 {
 
   def run(lines: List[(Direction, Len)]): Map[Point, Quantity] = {
     def loop(
-        point: Point,
-        instructions: List[(Direction, Len)],
-        points: List[Point]
+      point: Point,
+      instructions: List[(Direction, Len)],
+      points: List[Point]
     ): List[Point] = {
       instructions match {
         case Nil => points

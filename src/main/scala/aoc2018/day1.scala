@@ -4,6 +4,7 @@ import scala.annotation.tailrec
 import scala.io.Source
 
 object Day1 extends App {
+
   val input =
     Source.fromFile("src/main/scala/aoc2018/input-day1.txt").getLines.toList
 
