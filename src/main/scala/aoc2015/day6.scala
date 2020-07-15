@@ -2,6 +2,7 @@ package aoc2015
 
 import scala.util.matching.Regex
 import scala.io.Source
+import scala.collection.mutable.ArrayBuffer // used because of the efficiency problem 
 
 object Day6 {
   def readFile: List[String] = {
@@ -13,14 +14,14 @@ object Day6 {
     lines
   }
 
-  def run(list: List[String]): List[List[Int]] = {
+  def run(list: List[String]): ArrayBuffer[ArrayBuffer[Int]] = {
     val instruction =
       raw"(toggle|turn on|turn off) (\d+,\d+) through (\d+,\d+)".r
 
     def loop(
         instructions: List[String],
-        grid: List[List[Int]]
-    ): List[List[Int]] =
+        grid: ArrayBuffer[ArrayBuffer[Int]]
+    ): ArrayBuffer[ArrayBuffer[Int]] =
       if (instructions == Nil) {
         grid
       } else {
@@ -46,7 +47,7 @@ object Day6 {
         }
       }
 
-    loop(list, List.fill(1000)(List.fill(1000)(0)))
+    loop(list, ArrayBuffer.fill(1000)(ArrayBuffer.fill(1000)(0)))
   }
 
   def takePoints(str: String): (Int, Int) = {
@@ -55,36 +56,33 @@ object Day6 {
   }
 
   def toggle(
-      grid: List[List[Int]],
+      grid: ArrayBuffer[ArrayBuffer[Int]],
       first: (Int, Int),
       second: (Int, Int),
       func: Int => Int
-  ): List[List[Int]] = {
+  ): ArrayBuffer[ArrayBuffer[Int]] = {
     val points = (for {
       x <- first._1 to second._1
       y <- first._2 to second._2
     } yield (x, y)).toList
 
-    points.foldLeft(grid)((acc, point) =>
-      acc.updated(
-        point._1,
-        acc(point._1)
-          .updated(point._2, func(acc(point._1)(point._2)))
-      )
-    )
+    points.foldLeft(grid) { (acc, point) =>
+      acc(point._1)(point._2) = func(acc(point._1)(point._2))
+      acc
+    }
   }
 
   def turnOn(
-      grid: List[List[Int]],
+      grid: ArrayBuffer[ArrayBuffer[Int]],
       first: (Int, Int),
       second: (Int, Int)
-  ): List[List[Int]] = toggle(grid, first, second, e => 1)
+  ): ArrayBuffer[ArrayBuffer[Int]] = toggle(grid, first, second, e => 1)
 
   def turnOff(
-      grid: List[List[Int]],
+      grid: ArrayBuffer[ArrayBuffer[Int]],
       first: (Int, Int),
       second: (Int, Int)
-  ): List[List[Int]] = toggle(grid, first, second, e => 0)
+  ): ArrayBuffer[ArrayBuffer[Int]] = toggle(grid, first, second, e => 0)
 
 }
 
@@ -92,5 +90,5 @@ object Day6Main extends App {
   val lines = Day6.readFile
 
   println(lines.head)
-  println(Day6.run(lines).head.take(100))
+  println(Day6.run(lines).flatten.foldLeft(0)(_ + _))
 }
