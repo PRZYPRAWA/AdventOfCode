@@ -49,7 +49,6 @@ object Day7 {
         case head :: tl =>
           head match {
             case provideNumber(number, to) =>
-              println("DUPA")
               loop(tl, hashMap + (to -> number.toInt))
 
             case provide(from, to) =>
@@ -165,4 +164,8 @@ object Day7Main extends App {
   val result = Day7.run(input)
 
   println(result("a"))
+
+  val input2 = (s"${result("a")} -> b") :: input.dropWhile(e => e.matches("(\\d+) -> b"))
+
+  println(Day7.run(input2)("a"))
 }
